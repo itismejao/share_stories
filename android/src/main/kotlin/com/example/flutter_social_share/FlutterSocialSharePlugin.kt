@@ -1,7 +1,7 @@
-package br.com.etus.etus.flutter_social_share
+package com.example.flutter_social_share
 
-import br.com.etus.etus.flutter_social_share.shareToStory.Instagram
-import br.com.etus.etus.flutter_social_share.shareToStory.Facebook
+import com.example.flutter_social_share.shareToStory.Instagram
+import com.example.flutter_social_share.shareToStory.Facebook
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -11,7 +11,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 /** FlutterSocialSharePlugin */
-class FlutterSocialSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+public class FlutterSocialSharePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var instagramStory: Instagram
     private lateinit var facebookStory: Facebook
 
