@@ -1,4 +1,4 @@
-package br.com.etus.etus.flutter_social_share.shareToStory
+package com.example.flutter_social_share.shareToStory
 
 import android.app.Activity
 import android.content.Context
@@ -37,7 +37,8 @@ class Facebook(private val context: Context) {
 
         val intent = Intent("com.facebook.reels.SHARE_TO_REEL")
         intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        intent.putExtra("source_application", context.packageName)
+//        intent.putExtra("source_application", context.packageName)
+        intent.putExtra("com.facebook.platform.extra.APPLICATION_ID","1653808151499520")
 
         if (backgroundUri != null) {
             val uri = getFileUri(backgroundUri.path.toString())

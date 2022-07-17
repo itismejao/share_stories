@@ -1,4 +1,4 @@
-package br.com.etus.etus.flutter_social_share
+package com.example.flutter_social_share
 
 import androidx.core.content.FileProvider
 

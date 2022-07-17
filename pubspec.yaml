@@ -1,8 +1,7 @@
 name: flutter_social_share
-description: A new Flutter plugin project.
+description: A plugin designed to share stories on Instagram and reels on Facebook.
 version: 0.0.1
-author: João Marcos <joao.neto@etus.com.br>
-homepage:
+homepage: https://github.com/itismejao/flutter_social_share.git
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -35,13 +34,16 @@ flutter:
   # adding or updating assets for this project.
   plugin:
     platforms:
+      android:
+        package: com.example.flutter_social_share
+        pluginClass: FlutterSocialSharePlugin
     # This plugin project was generated without specifying any
     # platforms with the `--platform` argument. If you see the `some_platform` map below, remove it and
     # then add platforms following the instruction here:
     # https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms
     # -------------------
-      some_platform:
-        pluginClass: somePluginClass
+#      some_platform:
+#        pluginClass: somePluginClass
     # -------------------
 
   # To add assets to your plugin package, add an assets section, like this:

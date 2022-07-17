@@ -1,4 +1,4 @@
-package br.com.etus.etus.flutter_social_share.shareToStory
+package com.example.flutter_social_share.shareToStory
 
 import android.app.Activity
 import android.content.Context
