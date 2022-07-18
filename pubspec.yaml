@@ -1,7 +1,7 @@
-name: flutter_social_share
+name: share_stories
 description: A plugin designed to share stories on Instagram and reels on Facebook.
 version: 0.0.1
-homepage: https://github.com/itismejao/flutter_social_share.git
+homepage: https://github.com/itismejao/share_stories.git
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

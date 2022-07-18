@@ -1,4 +1,4 @@
-# flutter_social_share
+# share_stories
 
 A new Flutter plugin project.
 
