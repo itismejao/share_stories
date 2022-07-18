@@ -48,10 +48,15 @@ class FlutterSocialShare {
     Uri? stickerAssetUri,
     Color? topColor,
     Color? bottomColor,
+    required String? appID
   }) async {
     assert(backgroundAssetUri != null || stickerAssetUri != null);
 
     final Map<String, String> params = Map();
+
+    if(appID != null){
+      params["appId"] = appID;
+    }
 
     if (backgroundAssetUri != null) {
       params["backgroundAssetUri"] = Platform.isAndroid

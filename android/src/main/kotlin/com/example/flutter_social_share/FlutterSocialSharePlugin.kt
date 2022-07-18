@@ -46,6 +46,7 @@ public class FlutterSocialSharePlugin : FlutterPlugin, MethodCallHandler, Activi
                                 call.argument("stickerAssetUri"),
                                 call.argument("topColor"),
                                 call.argument("bottomColor"),
+                                call.argument("appId"),
                         )
                 )
             }

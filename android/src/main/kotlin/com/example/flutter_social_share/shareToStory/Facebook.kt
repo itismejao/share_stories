@@ -17,11 +17,12 @@ class Facebook(private val context: Context) {
             stickerUri: String?,
             topColor: String?,
             bottomColor: String?,
+            appId: String?
     ): String {
         val background: Uri? = if (backgroundUri != null) Uri.parse(backgroundUri) else null
         val sticker: Uri? = if (stickerUri != null) Uri.parse(stickerUri) else null
 
-        shareToStory(background, sticker, topColor, bottomColor)
+        shareToStory(background, sticker, topColor, bottomColor, appId)
         return "Tests: $background / $sticker / $topColor / $bottomColor"
     }
 
@@ -30,6 +31,7 @@ class Facebook(private val context: Context) {
             stickerUri: Uri?,
             topColor: String?,
             bottomColor: String?,
+            appId: String?,
     ) {
         if (backgroundUri == null && stickerUri == null) {
             throw IllegalArgumentException("Background Asset Uri or Sticker Asset Uri must not be null")
@@ -38,7 +40,9 @@ class Facebook(private val context: Context) {
         val intent = Intent("com.facebook.reels.SHARE_TO_REEL")
         intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 //        intent.putExtra("source_application", context.packageName)
-        intent.putExtra("com.facebook.platform.extra.APPLICATION_ID","1653808151499520")
+        if (appId != null) {
+            intent.putExtra("com.facebook.platform.extra.APPLICATION_ID", appId)
+        }
 
         if (backgroundUri != null) {
             val uri = getFileUri(backgroundUri.path.toString())
@@ -49,12 +53,12 @@ class Facebook(private val context: Context) {
             )
             val ext = MimeTypeMap.getFileExtensionFromUrl(uri.path)
             val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext)
-            intent.setDataAndType(uri, mimeType ?: "image/jpeg")
+            intent.setDataAndType(uri, mimeType ?: "video/mp4")
         }
 
         if (stickerUri != null) {
             if (backgroundUri == null) {
-                intent.type = "image/jpeg"
+                intent.type = "video/mp4"
             }
             val uri = getFileUri(stickerUri.path.toString())
             intent.putExtra("interactive_asset_uri", uri)
