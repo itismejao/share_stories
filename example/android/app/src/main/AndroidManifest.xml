@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_social_share_example">
+    package="com.example.share_stories_example">
    <application
-        android:label="flutter_social_share_example"
+        android:label="share_stories_example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

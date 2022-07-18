@@ -1,7 +1,7 @@
-package com.example.flutter_social_share
+package com.example.share_stories
 
-import com.example.flutter_social_share.shareToStory.Instagram
-import com.example.flutter_social_share.shareToStory.Facebook
+import com.example.share_stories.shareToStory.Instagram
+import com.example.share_stories.shareToStory.Facebook
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -20,7 +20,7 @@ public class FlutterSocialSharePlugin : FlutterPlugin, MethodCallHandler, Activi
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         instagramStory = Instagram(flutterPluginBinding.applicationContext)
         facebookStory = Facebook(flutterPluginBinding.applicationContext)
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_social_share")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "share_stories")
         channel.setMethodCallHandler(this)
     }
 

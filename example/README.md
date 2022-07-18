@@ -1,6 +1,6 @@
-# flutter_social_share_example
+# share_stories_example
 
-Demonstrates how to use the flutter_social_share plugin.
+Demonstrates how to use the share_stories plugin.
 
 ## Getting Started
 

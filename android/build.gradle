@@ -1,4 +1,4 @@
-group 'com.example.flutter_social_share'
+group 'com.example.share_stories'
 version '1.0-SNAPSHOT'
 
 buildscript {

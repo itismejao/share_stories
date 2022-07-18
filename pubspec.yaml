@@ -35,7 +35,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.flutter_social_share
+        package: com.example.share_stories
         pluginClass: FlutterSocialSharePlugin
     # This plugin project was generated without specifying any
     # platforms with the `--platform` argument. If you see the `some_platform` map below, remove it and

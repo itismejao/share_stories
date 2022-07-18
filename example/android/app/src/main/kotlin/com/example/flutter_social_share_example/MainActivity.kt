@@ -1,4 +1,4 @@
-package com.example.flutter_social_share_example
+package com.example.share_stories_example
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,4 @@
-package com.example.flutter_social_share
+package com.example.share_stories
 
 import androidx.core.content.FileProvider
 

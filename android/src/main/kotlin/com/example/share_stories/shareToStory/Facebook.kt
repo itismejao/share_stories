@@ -1,4 +1,4 @@
-package com.example.flutter_social_share.shareToStory
+package com.example.share_stories.shareToStory
 
 import android.app.Activity
 import android.content.Context
@@ -9,42 +9,61 @@ import android.webkit.MimeTypeMap
 import androidx.core.content.FileProvider
 import java.io.*
 
-class Instagram(private val context: Context) {
+class Facebook(private val context: Context) {
     var activity: Activity? = null
 
     fun share(
-        backgroundUri: String?,
-        stickerUri: String?,
-        topColor: String?,
-        bottomColor: String?,
+            backgroundUri: String?,
+            stickerUri: String?,
+            topColor: String?,
+            bottomColor: String?,
+            appId: String?
     ): String {
         val background: Uri? = if (backgroundUri != null) Uri.parse(backgroundUri) else null
         val sticker: Uri? = if (stickerUri != null) Uri.parse(stickerUri) else null
 
-        shareToStory(background, sticker, topColor, bottomColor)
+        shareToStory(background, sticker, topColor, bottomColor, appId)
+        return "Tests: $background / $sticker / $topColor / $bottomColor"
+    }
+
+    fun shareReels(
+            backgroundUri: String?,
+            stickerUri: String?,
+            topColor: String?,
+            bottomColor: String?,
+            appId: String?
+    ): String {
+        val background: Uri? = if (backgroundUri != null) Uri.parse(backgroundUri) else null
+        val sticker: Uri? = if (stickerUri != null) Uri.parse(stickerUri) else null
+
+        shareToReels(background, sticker, topColor, bottomColor, appId)
         return "Tests: $background / $sticker / $topColor / $bottomColor"
     }
 
     private fun shareToStory(
-        backgroundUri: Uri?,
-        stickerUri: Uri?,
-        topColor: String?,
-        bottomColor: String?,
+            backgroundUri: Uri?,
+            stickerUri: Uri?,
+            topColor: String?,
+            bottomColor: String?,
+            appId: String?,
     ) {
         if (backgroundUri == null && stickerUri == null) {
             throw IllegalArgumentException("Background Asset Uri or Sticker Asset Uri must not be null")
         }
 
-        val intent = Intent("com.instagram.share.ADD_TO_STORY")
+        val intent = Intent("com.facebook.stories.ADD_TO_STORY")
         intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        intent.putExtra("source_application", context.packageName)
+//        intent.putExtra("source_application", context.packageName)
+        if (appId != null) {
+            intent.putExtra("com.facebook.platform.extra.APPLICATION_ID", appId)
+        }
 
         if (backgroundUri != null) {
             val uri = getFileUri(backgroundUri.path.toString())
             context.grantUriPermission(
-                "com.instagram.android",
-                uri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION,
+                    "com.facebook.android",
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
             )
             val ext = MimeTypeMap.getFileExtensionFromUrl(uri.path)
             val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext)
@@ -58,9 +77,63 @@ class Instagram(private val context: Context) {
             val uri = getFileUri(stickerUri.path.toString())
             intent.putExtra("interactive_asset_uri", uri)
             context.grantUriPermission(
-                "com.instagram.android",
-                uri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION,
+                    "com.facebook.android",
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
+            )
+        }
+
+        if (topColor != null) {
+            intent.putExtra("top_background_color", topColor)
+        }
+
+        if (bottomColor != null) {
+            intent.putExtra("bottom_background_color", bottomColor)
+        }
+
+        post(intent)
+    }
+
+    private fun shareToReels(
+            backgroundUri: Uri?,
+            stickerUri: Uri?,
+            topColor: String?,
+            bottomColor: String?,
+            appId: String?,
+    ) {
+        if (backgroundUri == null && stickerUri == null) {
+            throw IllegalArgumentException("Background Asset Uri or Sticker Asset Uri must not be null")
+        }
+
+        val intent = Intent("com.facebook.reels.SHARE_TO_REEL")
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+//        intent.putExtra("source_application", context.packageName)
+        if (appId != null) {
+            intent.putExtra("com.facebook.platform.extra.APPLICATION_ID", appId)
+        }
+
+        if (backgroundUri != null) {
+            val uri = getFileUri(backgroundUri.path.toString())
+            context.grantUriPermission(
+                    "com.facebook.android",
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
+            )
+            val ext = MimeTypeMap.getFileExtensionFromUrl(uri.path)
+            val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext)
+            intent.setDataAndType(uri, mimeType ?: "video/mp4")
+        }
+
+        if (stickerUri != null) {
+            if (backgroundUri == null) {
+                intent.type = "video/mp4"
+            }
+            val uri = getFileUri(stickerUri.path.toString())
+            intent.putExtra("interactive_asset_uri", uri)
+            context.grantUriPermission(
+                    "com.facebook.android",
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
             )
         }
 
@@ -81,9 +154,9 @@ class Instagram(private val context: Context) {
             file = copyToExternalFolder(file)
         }
         return FileProvider.getUriForFile(
-            context,
-            context.packageName + ".flutter.social_share",
-            file,
+                context,
+                context.packageName + ".flutter.social_share",
+                file,
         )
     }
 
@@ -139,7 +212,7 @@ class Instagram(private val context: Context) {
     }
 
     private companion object {
-        private val TAG = Instagram::class.java.name
+        private val TAG = Facebook::class.java.name
     }
 
 }

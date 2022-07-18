@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 
-class FlutterSocialShare {
+class ShareStories {
   static const MethodChannel _channel =
-      const MethodChannel('flutter_social_share');
+      const MethodChannel('share_stories');
 
   static Future<String?> get platformVersion async {
     final String? version = await _channel.invokeMethod('getPlatformVersion');
