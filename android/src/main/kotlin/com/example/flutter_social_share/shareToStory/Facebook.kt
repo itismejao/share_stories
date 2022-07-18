@@ -26,7 +26,75 @@ class Facebook(private val context: Context) {
         return "Tests: $background / $sticker / $topColor / $bottomColor"
     }
 
+    fun shareReels(
+            backgroundUri: String?,
+            stickerUri: String?,
+            topColor: String?,
+            bottomColor: String?,
+            appId: String?
+    ): String {
+        val background: Uri? = if (backgroundUri != null) Uri.parse(backgroundUri) else null
+        val sticker: Uri? = if (stickerUri != null) Uri.parse(stickerUri) else null
+
+        shareToReels(background, sticker, topColor, bottomColor, appId)
+        return "Tests: $background / $sticker / $topColor / $bottomColor"
+    }
+
     private fun shareToStory(
+            backgroundUri: Uri?,
+            stickerUri: Uri?,
+            topColor: String?,
+            bottomColor: String?,
+            appId: String?,
+    ) {
+        if (backgroundUri == null && stickerUri == null) {
+            throw IllegalArgumentException("Background Asset Uri or Sticker Asset Uri must not be null")
+        }
+
+        val intent = Intent("com.facebook.stories.ADD_TO_STORY")
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+//        intent.putExtra("source_application", context.packageName)
+        if (appId != null) {
+            intent.putExtra("com.facebook.platform.extra.APPLICATION_ID", appId)
+        }
+
+        if (backgroundUri != null) {
+            val uri = getFileUri(backgroundUri.path.toString())
+            context.grantUriPermission(
+                    "com.facebook.android",
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
+            )
+            val ext = MimeTypeMap.getFileExtensionFromUrl(uri.path)
+            val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext)
+            intent.setDataAndType(uri, mimeType ?: "image/jpeg")
+        }
+
+        if (stickerUri != null) {
+            if (backgroundUri == null) {
+                intent.type = "image/jpeg"
+            }
+            val uri = getFileUri(stickerUri.path.toString())
+            intent.putExtra("interactive_asset_uri", uri)
+            context.grantUriPermission(
+                    "com.facebook.android",
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
+            )
+        }
+
+        if (topColor != null) {
+            intent.putExtra("top_background_color", topColor)
+        }
+
+        if (bottomColor != null) {
+            intent.putExtra("bottom_background_color", bottomColor)
+        }
+
+        post(intent)
+    }
+
+    private fun shareToReels(
             backgroundUri: Uri?,
             stickerUri: Uri?,
             topColor: String?,

@@ -50,6 +50,17 @@ public class FlutterSocialSharePlugin : FlutterPlugin, MethodCallHandler, Activi
                         )
                 )
             }
+            "shareToReelsFacebook" -> {
+                result.success(
+                        facebookStory.shareReels(
+                                call.argument("backgroundAssetUri"),
+                                call.argument("stickerAssetUri"),
+                                call.argument("topColor"),
+                                call.argument("bottomColor"),
+                                call.argument("appId"),
+                        )
+                )
+            }
             else -> {
                 result.notImplemented()
             }
